@@ -109,6 +109,41 @@ The app loops over Miller indices `(hkl)` and ranks possible planes using a scor
 - how widely spaced the planes are
 - how dense the plane is
 
+## Algorithmic decisions
+
+The app uses a few intentional mathematical choices rather than arbitrary transforms:
+
+### 1) Reciprocal lattice matrix for crystal planes
+
+For cleavage prediction, the code builds plane normals from the **reciprocal lattice** instead of the direct lattice. That is the correct space for Miller indices `(hkl)` because a plane index represents orientation and spacing, not atomic coordinates directly.
+
+- direct lattice vectors describe the real-space unit cell
+- reciprocal lattice vectors describe plane normals and interplanar spacing
+- using the reciprocal matrix makes the `(hkl)` search mathematically consistent and easy to rank
+
+### 2) Harmonic energy for strain
+
+Bond stretching and bond bending are modeled with quadratic terms:
+
+- small distortions give small energy changes
+- larger distortions rise faster
+- the result behaves like a spring approximation, which is a common first-order physical model
+
+This keeps the estimator fast and interpretable.
+
+### 3) Normalized pressure direction
+
+Pressure is converted into a unit vector before scoring cleavage planes. This separates:
+
+- **direction**, which affects which plane is favored
+- **magnitude**, which is not needed for the ranking heuristic
+
+That makes the score easier to compare across inputs.
+
+### 4) Heuristic ranking instead of full simulation
+
+The cleavage model uses geometric proxies such as spacing and planar density rather than a full fracture mechanics solver. That choice is intentional because the app is meant to be lightweight, fast, and educational.
+
 ## Tech stack
 
 - **Streamlit** for the UI
