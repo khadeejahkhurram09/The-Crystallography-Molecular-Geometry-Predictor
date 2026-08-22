@@ -7,7 +7,7 @@ from chem.visualization import molecule_view_html
 from chem.advanced import calculate_molecular_strain_energy, predict_cleavage_planes
 
 st.set_page_config(
-    page_title="Molecular Geometry Mapper",
+    page_title="3D Chemistry Math Models",
     page_icon="🧪",
     layout="wide",
 )
@@ -29,6 +29,18 @@ st.markdown(
         background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(99, 102, 241, 0.22));
         backdrop-filter: blur(3px);
         margin-bottom: 1rem;
+    }
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 0.85rem;
+    }
+    .feature-card {
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 12px;
+        padding: 0.85rem 0.95rem;
+        background: rgba(15, 23, 42, 0.65);
     }
     .panel-card {
         border: 1px solid rgba(148, 163, 184, 0.25);
@@ -58,20 +70,25 @@ st.markdown(
 st.markdown(
     """
 <div class="hero-card">
-  <h1 style="margin:0;">🧬 Molecular Geometry + Crystal Lattice Studio</h1>
+  <h1 style="margin:0;">🧬 3D Chemistry Math Models</h1>
   <p style="margin:0.45rem 0 0 0; opacity:0.95;">
-    Explore 3D molecules, bond angles, strain-energy estimators, and pressure-driven cleavage predictions in one place.
+    Turn chemistry inputs into interactive 3D molecular geometry, strain-energy estimates, and crystal cleavage predictions.
   </p>
+  <div class="feature-grid">
+    <div class="feature-card"><b>Molecules</b><br>Build 3D conformers from SMILES/InChI and inspect bond angles.</div>
+    <div class="feature-card"><b>Strain energy</b><br>Estimate how much distortion energy is stored in bent or stretched bonds.</div>
+    <div class="feature-card"><b>Crystal cleavage</b><br>Rank likely fracture planes under an applied pressure direction.</div>
+  </div>
 </div>
 """,
-    unsafe_allow_html=True,
+unsafe_allow_html=True,
 )
 
 with st.sidebar:
     st.markdown("### ⚙️ Workspace Guide")
     st.markdown(
-        "- Use **SMILES/InChI** for molecules\n"
-        "- Use **CIF** for crystal structures\n"
+        "- Use **SMILES/InChI** for molecular geometry\n"
+        "- Use **CIF** for crystal lattice analysis\n"
         "- Advanced tools provide fast numerical estimates for exploration"
     )
     st.info("Tip: start with `CCO` in Molecule and a small CIF sample in Crystal.")
